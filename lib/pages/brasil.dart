@@ -22,10 +22,10 @@ class _BrasilState extends State<Brasil> {
               children: <Widget>[
                 OutlinedButton(
                   onPressed: (() {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(builder: (context) => GeralBrasil(estados_recebidos: fetchGet())),
-                    // );
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => GeralBrasil()),
+                    );
                   }),
                   child: Container(
                     padding: EdgeInsets.all(20.0),

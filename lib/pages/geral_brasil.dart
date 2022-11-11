@@ -1,55 +1,298 @@
-// import 'dart:async';
-// import 'dart:convert';
-// import 'package:flutter/material.dart';
-// import 'package:http/http.dart' as http;
-// import 'requisitorapi.dart';
+import 'dart:async';
+import 'dart:convert';
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'requisitorapi.dart';
 
-// Future<Covid> fetchGet() async {
-//   final response = await http
-//       .get(Uri.parse("https://covid19-brazil-api.now.sh/api/report/v1"));
+class GeralBrasil extends StatefulWidget {
+  const GeralBrasil({super.key});
 
-//   if (response.statusCode == 200) {
-//     print(json.decode(response.body));
-//     // se o servidor retornar um response OK, vamos fazer o parse no JSON
-//     return Covid.fromJson(json.decode(response.body));
-//   } else {
-//     // se a responsta não for OK , lançamos um erro
-//     print("Entrou 2");
+  @override
+  State<GeralBrasil> createState() => _GeralBrasilState();
+}
 
-//     throw Exception('Failed to load get');
-//   }
-// }
+class _GeralBrasilState extends State<GeralBrasil> {
+  Future<Covid> fetchGet() async {
+    final response = await http.get(Uri.parse(
+        "https://covid19-brazil-api.vercel.app/api/report/v1/brazil"));
+    print(Covid.fromJson(json.decode(response.body)));
+    return Covid.fromJson(json.decode(response.body));
+  }
 
-// void main() => runApp(GeralBrasil(estados_recebidos: fetchGet()));
-
-// class GeralBrasil extends StatelessWidget {
-//   final Future<Covid> estados_recebidos;
-//   GeralBrasil({Key? key, required this.estados_recebidos}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//         appBar: AppBar(),
-//         body: (Column(
-//           children: [
-//             Center(
-//               child: FutureBuilder<Covid>(
-//                 future: fetchGet(),
-//                 builder: (context, snapshot) {
-//                   print(snapshot.data);
-//                   if (snapshot.hasData) {
-//                     return Padding(
-//                       padding: const EdgeInsets.all(15.0),
-//                       child: Text(snapshot.data!.data.first.uf),
-//                     );
-//                   } else if (snapshot.hasError) {
-//                     return Text("Teste ${snapshot.error}");
-//                   }
-//                   return CircularProgressIndicator();
-//                 },
-//               ),
-//             )
-//           ],
-//         )));
-//   }
-// }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(),
+        body: (Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                const Text(
+                  "      Dados Gerais do Brasil",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+            FutureBuilder<Covid>(
+                future: fetchGet(),
+                builder: (context, snapshot) {
+                  print(snapshot.data);
+                  if (snapshot.hasData) {
+                    return Padding(
+                      padding: EdgeInsets.all(15.0),
+                      child: Column(children: [
+                        Card(
+                          color: Color.fromARGB(255, 227, 229, 238),
+                          child: SizedBox(
+                              width: 300,
+                              height: 85,
+                              child: Center(
+                                  child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(height: 8),
+                                  Row(children: [
+                                    SizedBox(width: 12),
+                                    Text(
+                                      "Sigla do estado",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Color.fromARGB(255, 56, 57, 58),
+                                      ),
+                                    )
+                                  ]),
+                                  SizedBox(height: 13),
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        Icons.location_city,
+                                        color: Color.fromARGB(255, 67, 66, 66),
+                                        size: 30.0,
+                                      ),
+                                      SizedBox(width: 115),
+                                      Text("${snapshot.data!.uf}",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color:
+                                                Color.fromARGB(255, 1, 33, 65),
+                                          )),
+                                    ],
+                                  )
+                                ],
+                              ))),
+                        ),
+                        Card(
+                          color: Color.fromARGB(255, 227, 229, 238),
+                          child: SizedBox(
+                              width: 300,
+                              height: 85,
+                              child: Center(
+                                  child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(height: 8),
+                                  Row(children: [
+                                    SizedBox(width: 12),
+                                    Text(
+                                      "Estado",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Color.fromARGB(255, 56, 57, 58),
+                                      ),
+                                    )
+                                  ]),
+                                  SizedBox(height: 13),
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        Icons.location_on,
+                                        color: Color.fromARGB(255, 67, 66, 66),
+                                        size: 30.0,
+                                      ),
+                                      SizedBox(width: 115),
+                                      Text("${snapshot.data!.state}",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color:
+                                                Color.fromARGB(255, 1, 33, 65),
+                                          )),
+                                    ],
+                                  )
+                                ],
+                              ))),
+                        ),
+                        Card(
+                          color: Color.fromARGB(255, 227, 229, 238),
+                          child: SizedBox(
+                              width: 300,
+                              height: 85,
+                              child: Center(
+                                  child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(height: 8),
+                                  Row(children: [
+                                    SizedBox(width: 12),
+                                    Text(
+                                      "Casos",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Color.fromARGB(255, 56, 57, 58),
+                                      ),
+                                    )
+                                  ]),
+                                  SizedBox(height: 13),
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        Icons.person,
+                                        color: Color.fromARGB(255, 67, 66, 66),
+                                        size: 30.0,
+                                      ),
+                                      SizedBox(width: 115),
+                                      Text("${snapshot.data!.cases}",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color:
+                                                Color.fromARGB(255, 1, 33, 65),
+                                          )),
+                                    ],
+                                  )
+                                ],
+                              ))),
+                        ),
+                        Card(
+                          color: Color.fromARGB(255, 227, 229, 238),
+                          child: SizedBox(
+                              width: 300,
+                              height: 85,
+                              child: Center(
+                                  child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(height: 8),
+                                  Row(children: [
+                                    SizedBox(width: 12),
+                                    Text(
+                                      "Mortes",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Color.fromARGB(255, 56, 57, 58),
+                                      ),
+                                    )
+                                  ]),
+                                  SizedBox(height: 13),
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        Icons.heart_broken_sharp,
+                                        color: Color.fromARGB(255, 67, 66, 66),
+                                        size: 30.0,
+                                      ),
+                                      SizedBox(width: 115),
+                                      Text(
+                                          "${snapshot.data!.deaths.toString()}",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color:
+                                                Color.fromARGB(255, 1, 33, 65),
+                                          )),
+                                    ],
+                                  )
+                                ],
+                              ))),
+                        ),
+                        Card(
+                          color: Color.fromARGB(255, 227, 229, 238),
+                          child: SizedBox(
+                              width: 300,
+                              height: 85,
+                              child: Center(
+                                  child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(height: 8),
+                                  Row(children: [
+                                    SizedBox(width: 12),
+                                    Text(
+                                      "Suspeitos",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Color.fromARGB(255, 56, 57, 58),
+                                      ),
+                                    )
+                                  ]),
+                                  SizedBox(height: 13),
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        Icons.mode_outlined,
+                                        color: Color.fromARGB(255, 67, 66, 66),
+                                        size: 30.0,
+                                      ),
+                                      SizedBox(width: 115),
+                                      Text(
+                                          "${snapshot.data!.suspects.toString()}",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color:
+                                                Color.fromARGB(255, 1, 33, 65),
+                                          )),
+                                    ],
+                                  )
+                                ],
+                              ))),
+                        ),
+                        Card(
+                          color: Color.fromARGB(255, 227, 229, 238),
+                          child: SizedBox(
+                              width: 300,
+                              height: 85,
+                              child: Center(
+                                  child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(height: 8),
+                                  Row(children: [
+                                    SizedBox(width: 12),
+                                    Text(
+                                      "Recusados",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Color.fromARGB(255, 56, 57, 58),
+                                      ),
+                                    )
+                                  ]),
+                                  SizedBox(height: 13),
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        Icons.insert_emoticon,
+                                        color: Color.fromARGB(255, 67, 66, 66),
+                                        size: 30.0,
+                                      ),
+                                      SizedBox(width: 115),
+                                      Text(
+                                          "${snapshot.data!.refuses.toString()}",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color:
+                                                Color.fromARGB(255, 1, 33, 65),
+                                          )),
+                                    ],
+                                  )
+                                ],
+                              ))),
+                        ),
+                      ]),
+                    );
+                  } else if (snapshot.hasError) {
+                    return Text("${snapshot.error}");
+                  }
+                  return CircularProgressIndicator();
+                })
+          ],
+        )));
+  }
+}
