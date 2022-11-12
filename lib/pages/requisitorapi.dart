@@ -48,7 +48,6 @@ class CovidPais {
 
   factory CovidPais.fromJson(Map<String, dynamic> json) {
     json = json['data'];
-    print(json);
     return CovidPais(
       country: json["country"],
       cases: json["cases"],
@@ -58,6 +57,7 @@ class CovidPais {
     );
   }
 }
+
 class CovidTodosPais {
   CovidTodosPais(
     this.country,
@@ -67,13 +67,27 @@ class CovidTodosPais {
     this.recovered,
   );
 
-  
   final String country;
   final int? cases;
   final int? deaths;
   final int? confirmed;
   final int? recovered;
-
 }
 
+class CovidData {
+  CovidData(
+    this.uf,
+    this.cases,
+    this.deaths,
+    this.suspects,
+    this.recovered,
+    this.refuses
+  );
 
+  final String uf;
+  final int? cases;
+  final int? deaths;
+  final int? suspects;
+  final int? recovered;
+  final int? refuses;
+}

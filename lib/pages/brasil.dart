@@ -31,7 +31,7 @@ class _BrasilState extends State<Brasil> {
                     padding: EdgeInsets.all(20.0),
                     child: Column(
                       children: <Widget>[
-                        Text('Geral'),
+                        Text('Dado Geral do Brasil'),
                       ],
                     ),
                   ),
@@ -53,7 +53,7 @@ class _BrasilState extends State<Brasil> {
                     padding: EdgeInsets.all(20.0),
                     child: Column(
                       children: <Widget>[
-                        Text('Selecione um Estado'),
+                        Text('Selecionar um Estado'),
                       ],
                     ),
                   ),
