@@ -12,11 +12,10 @@ class GeralBrasil extends StatefulWidget {
 }
 
 class _GeralBrasilState extends State<GeralBrasil> {
-  Future<Covid> fetchGet() async {
+  Future<CovidPais> fetchGet() async {
     final response = await http.get(Uri.parse(
         "https://covid19-brazil-api.vercel.app/api/report/v1/brazil"));
-    print(Covid.fromJson(json.decode(response.body)));
-    return Covid.fromJson(json.decode(response.body));
+    return CovidPais.fromJson(json.decode(response.body));
   }
 
   @override
@@ -34,10 +33,9 @@ class _GeralBrasilState extends State<GeralBrasil> {
                 ),
               ],
             ),
-            FutureBuilder<Covid>(
+            FutureBuilder<CovidPais>(
                 future: fetchGet(),
                 builder: (context, snapshot) {
-                  print(snapshot.data);
                   if (snapshot.hasData) {
                     return Padding(
                       padding: EdgeInsets.all(15.0),
@@ -55,7 +53,7 @@ class _GeralBrasilState extends State<GeralBrasil> {
                                   Row(children: [
                                     SizedBox(width: 12),
                                     Text(
-                                      "Sigla do estado",
+                                      "Nome do País",
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         color: Color.fromARGB(255, 56, 57, 58),
@@ -71,47 +69,7 @@ class _GeralBrasilState extends State<GeralBrasil> {
                                         size: 30.0,
                                       ),
                                       SizedBox(width: 115),
-                                      Text("${snapshot.data!.uf}",
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color:
-                                                Color.fromARGB(255, 1, 33, 65),
-                                          )),
-                                    ],
-                                  )
-                                ],
-                              ))),
-                        ),
-                        Card(
-                          color: Color.fromARGB(255, 227, 229, 238),
-                          child: SizedBox(
-                              width: 300,
-                              height: 85,
-                              child: Center(
-                                  child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  SizedBox(height: 8),
-                                  Row(children: [
-                                    SizedBox(width: 12),
-                                    Text(
-                                      "Estado",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Color.fromARGB(255, 56, 57, 58),
-                                      ),
-                                    )
-                                  ]),
-                                  SizedBox(height: 13),
-                                  Row(
-                                    children: [
-                                      Icon(
-                                        Icons.location_on,
-                                        color: Color.fromARGB(255, 67, 66, 66),
-                                        size: 30.0,
-                                      ),
-                                      SizedBox(width: 115),
-                                      Text("${snapshot.data!.state}",
+                                      Text("${snapshot.data!.country}",
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             color:
@@ -146,12 +104,52 @@ class _GeralBrasilState extends State<GeralBrasil> {
                                   Row(
                                     children: [
                                       Icon(
-                                        Icons.person,
+                                        Icons.insert_chart,
                                         color: Color.fromARGB(255, 67, 66, 66),
                                         size: 30.0,
                                       ),
                                       SizedBox(width: 115),
                                       Text("${snapshot.data!.cases}",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color:
+                                                Color.fromARGB(255, 1, 33, 65),
+                                          )),
+                                    ],
+                                  )
+                                ],
+                              ))),
+                        ),
+                        Card(
+                          color: Color.fromARGB(255, 227, 229, 238),
+                          child: SizedBox(
+                              width: 300,
+                              height: 85,
+                              child: Center(
+                                  child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(height: 8),
+                                  Row(children: [
+                                    SizedBox(width: 12),
+                                    Text(
+                                      "Confirmado",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Color.fromARGB(255, 56, 57, 58),
+                                      ),
+                                    )
+                                  ]),
+                                  SizedBox(height: 13),
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        Icons.person,
+                                        color: Color.fromARGB(255, 67, 66, 66),
+                                        size: 30.0,
+                                      ),
+                                      SizedBox(width: 115),
+                                      Text("${snapshot.data!.confirmed}",
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             color:
@@ -216,48 +214,7 @@ class _GeralBrasilState extends State<GeralBrasil> {
                                   Row(children: [
                                     SizedBox(width: 12),
                                     Text(
-                                      "Suspeitos",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Color.fromARGB(255, 56, 57, 58),
-                                      ),
-                                    )
-                                  ]),
-                                  SizedBox(height: 13),
-                                  Row(
-                                    children: [
-                                      Icon(
-                                        Icons.mode_outlined,
-                                        color: Color.fromARGB(255, 67, 66, 66),
-                                        size: 30.0,
-                                      ),
-                                      SizedBox(width: 115),
-                                      Text(
-                                          "${snapshot.data!.suspects.toString()}",
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color:
-                                                Color.fromARGB(255, 1, 33, 65),
-                                          )),
-                                    ],
-                                  )
-                                ],
-                              ))),
-                        ),
-                        Card(
-                          color: Color.fromARGB(255, 227, 229, 238),
-                          child: SizedBox(
-                              width: 300,
-                              height: 85,
-                              child: Center(
-                                  child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  SizedBox(height: 8),
-                                  Row(children: [
-                                    SizedBox(width: 12),
-                                    Text(
-                                      "Recusados",
+                                      "Recuperados",
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         color: Color.fromARGB(255, 56, 57, 58),
@@ -274,7 +231,7 @@ class _GeralBrasilState extends State<GeralBrasil> {
                                       ),
                                       SizedBox(width: 115),
                                       Text(
-                                          "${snapshot.data!.refuses.toString()}",
+                                          "${snapshot.data!.recovered.toString()}",
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             color:
@@ -285,6 +242,7 @@ class _GeralBrasilState extends State<GeralBrasil> {
                                 ],
                               ))),
                         ),
+                       
                       ]),
                     );
                   } else if (snapshot.hasError) {

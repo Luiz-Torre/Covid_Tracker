@@ -33,41 +33,31 @@ class CovidEstado {
 
 
 
-class Covid {
-    Covid({
-        required this.uid,
-        required this.uf,
-        required this.state,
+class CovidPais {
+    CovidPais({
+        required this.country,
         required this.cases,
         required this.deaths,
-        required this.suspects,
-        required this.refuses,
-        required this.broadcast,
-        required this.comments,
-        required this.datetime,
+        required this.confirmed,
+        required this.recovered,
+
     });
 
-    int? uid;
-    String? uf;
-    String? state;
+    String? country;
     int? cases;
     int? deaths;
-    int? suspects;
-    int? refuses;
-    bool? broadcast;
-    String? comments;
-    DateTime? datetime;
+    int? confirmed;
+    int? recovered;
 
-    factory Covid.fromJson(Map<String, dynamic> json) => Covid(
-        uid: json["uid"],
-        uf: json["uf"],
-        state: json["state"],
+
+    factory CovidPais.fromJson(Map<String, dynamic> json) { 
+      json = json['data'];
+      return CovidPais(
+        country: json["country"],
         cases: json["cases"],
         deaths: json["deaths"],
-        suspects: json["suspects"],
-        refuses: json["refuses"],
-        broadcast: json["broadcast"],
-        comments: json["comments"],
-        datetime: DateTime.parse(json["datetime"]),
+        confirmed: json["confirmed"],
+        recovered: json["recovered"],
     );
+    }
 }
