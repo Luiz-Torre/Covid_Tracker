@@ -28,36 +28,52 @@ class CovidEstado {
         suspects: json["suspects"],
         refuses: json["refuses"],
         datetime: DateTime.parse(json["datetime"]),
-    );
+      );
 }
-
-
 
 class CovidPais {
-    CovidPais({
-        required this.country,
-        required this.cases,
-        required this.deaths,
-        required this.confirmed,
-        required this.recovered,
+  CovidPais({
+    required this.country,
+    required this.cases,
+    required this.deaths,
+    required this.confirmed,
+    required this.recovered,
+  });
 
-    });
+  String? country;
+  int? cases;
+  int? deaths;
+  int? confirmed;
+  int? recovered;
 
-    String? country;
-    int? cases;
-    int? deaths;
-    int? confirmed;
-    int? recovered;
-
-
-    factory CovidPais.fromJson(Map<String, dynamic> json) { 
-      json = json['data'];
-      return CovidPais(
-        country: json["country"],
-        cases: json["cases"],
-        deaths: json["deaths"],
-        confirmed: json["confirmed"],
-        recovered: json["recovered"],
+  factory CovidPais.fromJson(Map<String, dynamic> json) {
+    json = json['data'];
+    print(json);
+    return CovidPais(
+      country: json["country"],
+      cases: json["cases"],
+      deaths: json["deaths"],
+      confirmed: json["confirmed"],
+      recovered: json["recovered"],
     );
-    }
+  }
 }
+class CovidTodosPais {
+  CovidTodosPais(
+    this.country,
+    this.cases,
+    this.deaths,
+    this.confirmed,
+    this.recovered,
+  );
+
+  
+  final String country;
+  final int? cases;
+  final int? deaths;
+  final int? confirmed;
+  final int? recovered;
+
+}
+
+
